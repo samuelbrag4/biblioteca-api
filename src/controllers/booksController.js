@@ -1,83 +1,111 @@
-// Não fazemos a importação de "booksModel" pois já utilizamos o prisma para interagir diretamente com o banco
-import { PrismaClient } from "@prisma/client";
+import BookModel from "../models/bookModel.js";
 
-const prisma = new PrismaClient();
-
-// ROTA - Listar Todos os Livros
-export const getAllBooks = async (req, res) => {
-  try {
-    const books = await prisma.book.findMany();
-    res.status(200).json(books);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar os livros." });
-  }
-};
-
-// ROTA - Obter Livro por ID
-export const getBookById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const book = await prisma.book.findUnique({
-      where: { id: parseInt(id) },
-    });
-    if (!book) {
-      return res.status(404).json({ error: "Livro não encontrado." });
+// Criação da Classe BooksController -> Ponte Entre Rotas e Modelo (Controlador)
+class BooksController {
+  // ROTA -> Listar todos os livros
+  async getAllBooks(req, res) {
+    try {
+      const books = await BookModel.findAll();
+      res.status(200).json(books);
+    } catch (error) {
+      console.error("Erro ao buscar os livros:", error);
+      res.status(500).json({ error: "Erro ao buscar os livros." });
     }
-    res.status(200).json(book);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar o livro." });
-  }
-};
-
-// ROTA - Criar Novo Livro
-export const createBook = async (req, res) => {
-  const { title, author, publisher, isbn, category, year, description } = req.body;
-
-  // Validação de campos obrigatórios
-  if (!title || !author || !publisher || !isbn || !category) {
-    return res.status(400).json({ error: "Todos os campos obrigatórios devem ser preenchidos." });
   }
 
-  try {
-    const newBook = await prisma.book.create({
-      data: { title, author, publisher, isbn, category, year, description },
-    });
-    res.status(201).json(newBook);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao criar o livro." });
-  }
-};
+  // ROTA -> Listar livro por ID
+  async getBookById(req, res) {
+    try {
+      const { id } = req.params;
+      const book = await BookModel.findById(id);
 
-// ROTA - Atualizar Livro
-export const updateBook = async (req, res) => {
-  const { id } = req.params;
-  const { title, author, publisher, isbn, category, year, description } = req.body;
+      if (!book) {
+        return res.status(404).json({ error: "Livro não encontrado." });
+      }
 
-  // Validação de campos obrigatórios
-  if (!title || !author || !publisher || !isbn || !category) {
-    return res.status(400).json({ error: "Todos os campos obrigatórios devem ser preenchidos." });
+      res.status(200).json(book);
+    } catch (error) {
+      console.error("Erro ao buscar o livro:", error);
+      res.status(500).json({ error: "Erro ao buscar o livro." });
+    }
   }
 
-  try {
-    const updatedBook = await prisma.book.update({
-      where: { id: parseInt(id) },
-      data: { title, author, publisher, isbn, category, year, description },
-    });
-    res.status(200).json(updatedBook);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao atualizar o livro." });
-  }
-};
+  // ROTA -> Criar livro
+  async createBook(req, res) {
+    try {
+      const { title, author, publisher, isbn, category, year, description } =
+        req.body;
 
-// ROTA - Deletar Livro
-export const deleteBook = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await prisma.book.delete({
-      where: { id: parseInt(id) },
-    });
-    res.status(204).send();
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao deletar o livro." });
+      if (!title || !author || !publisher || !isbn || !category) {
+        return res
+          .status(400)
+          .json({
+            error: "Todos os campos obrigatórios devem ser preenchidos.",
+          });
+      }
+
+      const newBook = await BookModel.create(
+        title,
+        author,
+        publisher,
+        isbn,
+        category,
+        year,
+        description
+      );
+      res.status(201).json(newBook);
+    } catch (error) {
+      console.error("Erro ao criar o livro:", error);
+      res.status(500).json({ error: "Erro ao criar o livro." });
+    }
   }
-};
+
+  // ROTA -> Atualizar livro
+  async updateBook(req, res) {
+    try {
+      const { id } = req.params;
+      const { title, author, publisher, isbn, category, year, description } =
+        req.body;
+
+      const updatedBook = await BookModel.update(
+        id,
+        title,
+        author,
+        publisher,
+        isbn,
+        category,
+        year,
+        description
+      );
+
+      if (!updatedBook) {
+        return res.status(404).json({ error: "Livro não encontrado." });
+      }
+
+      res.status(200).json(updatedBook);
+    } catch (error) {
+      console.error("Erro ao atualizar o livro:", error);
+      res.status(500).json({ error: "Erro ao atualizar o livro." });
+    }
+  }
+
+  // ROTA -> Remover livro
+  async deleteBook(req, res) {
+    try {
+      const { id } = req.params;
+
+      const result = await BookModel.delete(id);
+
+      if (!result) {
+        return res.status(404).json({ error: "Livro não encontrado." });
+      }
+
+      res.status(204).send();
+    } catch (error) {
+      console.error("Erro ao remover o livro:", error);
+      res.status(500).json({ error: "Erro ao remover o livro." });
+    }
+  }
+}
+
+export default new BooksController();

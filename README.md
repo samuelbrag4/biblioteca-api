@@ -98,3 +98,8 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull r
 ## Licença
 
 Este projeto está licenciado sob a MIT License.
+
+Adições:
+motivos dos assincronos
+o que cada classe faz
+qual é a responsabilidade de controllers, model e routes
