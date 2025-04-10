@@ -2,7 +2,7 @@ import BookModel from "../models/bookModel.js";
 
 // Criação da Classe BooksController -> Ponte Entre Rotas e Modelo (Controlador)
 class BooksController {
-  // ROTA -> Listar todos os livros
+  // CONTROLADOR -> Listar todos os livros
   async getAllBooks(req, res) {
     try {
       const books = await BookModel.findAll();
@@ -13,7 +13,7 @@ class BooksController {
     }
   }
 
-  // ROTA -> Listar livro por ID
+  // CONTROLADOR -> Listar livro por ID
   async getBookById(req, res) {
     try {
       const { id } = req.params;
@@ -30,7 +30,7 @@ class BooksController {
     }
   }
 
-  // ROTA -> Criar livro
+  // CONTROLADOR -> Criar livro
   async createBook(req, res) {
     try {
       const { title, author, publisher, isbn, category, year, description } =
@@ -60,7 +60,7 @@ class BooksController {
     }
   }
 
-  // ROTA -> Atualizar livro
+  // CONTROLADOR -> Atualizar livro
   async updateBook(req, res) {
     try {
       const { id } = req.params;
@@ -89,7 +89,7 @@ class BooksController {
     }
   }
 
-  // ROTA -> Remover livro
+  // CONTROLADOR -> Remover livro
   async deleteBook(req, res) {
     try {
       const { id } = req.params;

@@ -103,3 +103,4 @@ Adições:
 motivos dos assincronos
 o que cada classe faz
 qual é a responsabilidade de controllers, model e routes
+por que no model utilizamos a importação do prisma
