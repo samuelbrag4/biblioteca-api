@@ -1,22 +1,22 @@
 import express from "express";
-import AnimeController from "../controllers/animeController.js";
+import booksController from "../controllers/booksController.js";
 
 const router = express.Router();
 
-// Rotas de Animes
-// GET /api/animes - Listar todos os animes
-router.get("/", AnimeController.getAllAnimes);
+// Rotas para a API de livros
+// GET /books - Listar todos os livros
+router.get("/", booksController.getAllBooks);
 
-// GET /api/animes/:id - Obter um anime pelo ID
-router.get("/:id", AnimeController.getAnimeById);
+// GET /books/:id - Obter um livro pelo ID
+router.get("/:id", booksController.getBookById);
 
-// POST /api/animes - Criar um novo anime
-router.post("/", AnimeController.createAnime);
+// POST /books - Criar um novo livro
+router.post("/", booksController.createBook);
 
-// PUT /api/animes/:id - Atualizar um anime
-router.put("/:id", AnimeController.updateAnime);
+// PUT /books/:id - Atualizar um livro
+router.put("/:id", booksController.updateBook);
 
-// DELETE /api/animes/:id - Remover um anime
-router.delete("/:id", AnimeController.deleteAnime);
+// DELETE /books/:id - Remover um livro
+router.delete("/:id", booksController.deleteBook);
 
 export default router;
