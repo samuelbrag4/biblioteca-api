@@ -4,6 +4,16 @@
 
 Este projeto é uma API backend desenvolvida para gerenciar o acervo de livros de uma biblioteca municipal. A API permite que bibliotecários realizem operações de cadastro, consulta, atualização e remoção de livros.
 
+## 🌟 Livros Disponíveis no Sistema
+
+A API já possui alguns livros cadastrados para facilitar os testes e a utilização inicial do sistema. Esses livros incluem obras clássicas e populares, como:
+
+- **1984** de George Orwell  
+- **O Hobbit** de J.R.R. Tolkien  
+- **Dom Quixote** de Miguel de Cervantes  
+
+Esses registros podem ser consultados, atualizados ou removidos conforme necessário.
+
 ## 🌐 Link do Repositório
 
 [🔗 GitHub - biblioteca-api](https://github.com/samuelbrag4/biblioteca-api.git)
@@ -134,4 +144,4 @@ Uma API (Interface de Programação de Aplicações) é um conjunto de definiç�
 
 ## 💡 Contribuições
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.  
