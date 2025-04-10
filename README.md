@@ -1,107 +1,137 @@
-# Sistema de Gerenciamento de Acervo Bibliográfico
+# 📚 Sistema de Gerenciamento de Acervo Bibliográfico
+
+![Banner do Projeto](./assets/banner.png)
 
 Este projeto é uma API backend desenvolvida para gerenciar o acervo de livros de uma biblioteca municipal. A API permite que bibliotecários realizem operações de cadastro, consulta, atualização e remoção de livros.
 
-## Tecnologias Utilizadas
+## 🌐 Link do Repositório
+
+[🔗 GitHub - biblioteca-api](https://github.com/samuelbrag4/biblioteca-api.git)
+
+## 🛠️ Tecnologias Utilizadas
 
 - Node.js
 - Express
 - Prisma ORM
-- TypeScript
 
-## Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
 ```
 biblioteca-api
+├── assets
 ├── prisma
 │   ├── schema.prisma
 │   └── migrations
 ├── src
 │   ├── controllers
-│   │   └── booksController.ts
+│   │   └── booksController.js
 │   ├── models
-│   │   └── bookModel.ts
+│   │   └── bookModel.js
 │   ├── routes
-│   │   └── booksRoutes.ts
-│   ├── app.ts
-│   └── server.ts
+│   │   └── booksRoutes.js
+│   ├── app.js
+│   └── server.js
 ├── .env
 ├── .env.example
+├── .gitignore
+├── package-lock.json
 ├── package.json
-├── tsconfig.json
 └── README.md
 ```
 
-## Como Instalar e Executar o Projeto
+## 🚀 Como Instalar e Executar o Projeto
 
 1. Clone o repositório:
-   ```
-   git clone <URL_DO_REPOSITORIO>
+
+   ```bash
+   git clone https://github.com/samuelbrag4/biblioteca-api.git
    cd biblioteca-api
    ```
 
 2. Instale as dependências:
-   ```
+
+   ```bash
    npm install
    ```
 
 3. Configure as variáveis de ambiente:
+
    - Renomeie o arquivo `.env.example` para `.env` e preencha com as informações necessárias.
 
 4. Execute as migrações do Prisma:
-   ```
+
+   ```bash
    npx prisma migrate dev
    ```
 
 5. Inicie o servidor:
+   ```bash
+   npm start
    ```
-   npm run start
-   ```
 
-## Endpoints da API
+## 🧪 Testando com Postman ou Thunder Client
 
-### Listar todos os livros
+### Exemplo de Requisição - Listar Livros
+
 - **Método:** GET
-- **URL:** `/books`
-- **Descrição:** Retorna uma lista de todos os livros disponíveis.
+- **URL:** `http://localhost:PORT/books`
 
-### Obter detalhes de um livro específico
+### Exemplo de Requisição - Listar Livros Pelo ID
+
 - **Método:** GET
-- **URL:** `/books/:id`
-- **Descrição:** Retorna os detalhes de um livro específico pelo ID.
+- **URL:** `http://localhost:PORT/books/:id`
 
-### Adicionar um novo livro
+### Exemplo de Requisição - Adicionar Livro
+
 - **Método:** POST
-- **URL:** `/books`
-- **Descrição:** Adiciona um novo livro ao acervo. Os campos obrigatórios devem ser fornecidos.
+- **URL:** `http://localhost:PORT/books`
+- **Body (raw - JSON):**
+  ```json
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "publisher": "Secker & Warburg",
+    "isbn": "9780451524935",
+    "category": "Distopia",
+    "year": 1949,
+    "description": "Um clássico da literatura distópica."
+  }
+  ```
 
-### Atualizar informações de um livro
+### Exemplo de Requisição - Atualizar Livro
+
 - **Método:** PUT
-- **URL:** `/books/:id`
-- **Descrição:** Atualiza as informações de um livro existente pelo ID.
+- **URL:** `http://localhost:PORT/books/:id`
+- **Body (raw - JSON):**
+  ```json
+  {
+    "title": "O Hobbit",
+    "author": "J.R.R. Tolkien",
+    "publisher": "HarperCollins",
+    "isbn": "9780261102217",
+    "category": "Fantasia",
+    "year": 1937,
+    "description": "A aventura que precede O Senhor dos Anéis."
+  }
+  ```
 
-### Remover um livro do acervo
+### Exemplo de Requisição - Remover Livro
+
 - **Método:** DELETE
-- **URL:** `/books/:id`
-- **Descrição:** Remove um livro do acervo pelo ID.
+- **URL:** `http://localhost:PORT/books/:id`
 
-## Decisões de Design e Arquitetura
+## 🏗️ Explicação da Estrutura
 
-- A arquitetura do projeto segue o padrão MVC (Model-View-Controller), onde a lógica de negócios é separada da lógica de apresentação.
-- O Prisma ORM é utilizado para facilitar a interação com o banco de dados, permitindo uma modelagem de dados clara e eficiente.
-- As rotas da API são organizadas de forma a facilitar a manutenção e a escalabilidade do sistema.
+- **Assincronismo:** A API é assíncrona para garantir que operações como acesso ao banco de dados não bloqueiem o fluxo do programa, melhorando a performance.
+- **Prisma no Model:** Usamos o Prisma para interagir com o banco de dados, pois ele oferece uma interface mais segura e eficiente do que manipular os dados diretamente no código.
+- **Controller:** Gerencia a lógica de negócios e processa as requisições.
+- **Routes:** Define os endpoints e conecta as rotas aos métodos dos controllers.
+- **Model:** Centraliza a lógica de acesso ao banco de dados, garantindo consistência e reutilização.
 
-## Contribuições
+## 🤔 O que é uma API?
+
+Uma API (Interface de Programação de Aplicações) é um conjunto de definições e protocolos que permite que diferentes sistemas se comuniquem. Neste projeto, a API fornece endpoints para gerenciar o acervo de livros de forma eficiente.
+
+## 💡 Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
-
-## Licença
-
-Este projeto está licenciado sob a MIT License.
-
-Adições:
-motivos dos assincronos
-o que cada classe faz
-qual é a responsabilidade de controllers, model e routes
-por que no model utilizamos a importação do prisma
-mensagens de erro personalizadas no terminal
