@@ -1,17 +1,38 @@
 import express from "express";
 import { config } from "dotenv";
 
-config(); 
+config();
 const port = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(express.json()); 
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({ message: "API de Coleção de Animes funcionando!" });
 });
 
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+// Inicia o servidor
+const server = app.listen(port, () => {
+  console.log(`🟢 Servidor rodando na porta ${port} 🟢`);
+});
+
+// MENSAGENS DE ERRO PERSONALIZADAS 
+
+// Captura interrupções (Ctrl+C) ou encerramento do processo
+process.on("SIGINT", () => {
+  console.log("🔴 Servidor interrompido manualmente (Ctrl+C).");
+  server.close(() => {
+    console.log("🛑 Servidor encerrado com sucesso.");
+    process.exit(0);
+  });
+});
+
+// Captura erros não tratados
+process.on("uncaughtException", (err) => {
+  console.error("❌ Erro não tratado:", err);
+  server.close(() => {
+    console.log("🛑 Servidor encerrado devido a um erro.");
+    process.exit(1);
+  });
 });
